@@ -1,0 +1,13 @@
+.main-content{
+    min-height: 80vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #050510;
+
+    color: white;
+
+    font-size: 30px;
+}
