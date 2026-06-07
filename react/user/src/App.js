@@ -3,18 +3,10 @@ import Footer from "./components/Footer";
 
 import "./App.css";
 
+import MovieDetails from "./pages/MovieDetails";
+
 function App() {
-  return (
-    <>
-      <Header />
-
-      <main className="main-content">
-        <h1>Welcome to StreamX</h1>
-      </main>
-
-      <Footer />
-    </>
-  );
+  return <MovieDetails />;
 }
 
 export default App;
