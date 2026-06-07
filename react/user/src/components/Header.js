@@ -16,7 +16,7 @@ function Header() {
       </nav>
 
       <button className="login-btn">
-        Login
+        Logout
       </button>
     </header>
   );

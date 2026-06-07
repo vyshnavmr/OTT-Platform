@@ -12,6 +12,7 @@ function Footer() {
       <div className="footer-links">
         <a href="/">Home</a>
         <a href="/">Movies</a>
+        <a href="/">Profile</a>
         {/* <a href="/">Contact</a> */}
       </div>
 
