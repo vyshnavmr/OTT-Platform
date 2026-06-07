@@ -88,7 +88,7 @@ function MovieDetails() {
               <button style={playButton}>
                 Play Now
               </button>
-              
+
               <button style={watchLaterButton}>
                 Add to Watch Later
               </button>
