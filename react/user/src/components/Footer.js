@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      <h2>StreamX</h2>
+      <h2>StreamER</h2>
 
       <p>
         The Future of Movie Streaming
