@@ -62,6 +62,14 @@ def list_movie(request):
     return Response(serializer.data)
 
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def movie_detail(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    serializer = MovieSerializer(movie)
+    return Response(serializer.data)
+
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def watch_movie(request, movie_id):
@@ -105,12 +113,46 @@ def get_watchlist(request):
     return Response(serializer.data)
 
 
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def delete_from_watchlist(request, movie_id):
+    watchlist_item = WatchList.objects.filter(
+        user=request.user,
+        movie_id=movie_id
+    ).first()
+
+    if not watchlist_item:
+        return Response(
+            {"error": "Movie not found in watchlist"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    watchlist_item.delete()
+    return Response(
+        {"message": "Movie removed from watchlist"},
+        status=status.HTTP_200_OK
+    )
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_watchhistory(request):
     watchhistory = WatchHistory.objects.all()
     serializer = WatchHistorySerializer(watchhistory, many=True)
     return Response(serializer.data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def search_movie(request):
+    query = request.GET.get("q")
+
+    if not query:
+        return Response({"error": "Search query is required"}, status=400)
+    
+    movies = Movie.objects.filter(name__icontains=query)
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

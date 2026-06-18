@@ -7,11 +7,13 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class WatchListSerializer(serializers.ModelSerializer):
+    movie= MovieSerializer(read_only=True)
     class Meta:
         model = WatchList
         fields = '__all__'
 \
 class WatchHistorySerializer(serializers.ModelSerializer):
+    movie = MovieSerializer(read_only=True)
     class Meta:
         model = WatchHistory
         fields = '__all__'
