@@ -10,7 +10,7 @@ class WatchListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WatchList
         fields = '__all__'
-\
+        
 class WatchHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = WatchHistory
