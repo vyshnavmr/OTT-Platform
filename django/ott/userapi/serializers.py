@@ -11,7 +11,7 @@ class WatchListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WatchList
         fields = '__all__'
-\
+        
 class WatchHistorySerializer(serializers.ModelSerializer):
     movie = MovieSerializer(read_only=True)
     class Meta:
