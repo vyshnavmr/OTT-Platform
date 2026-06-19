@@ -31,14 +31,16 @@ class User(AbstractBaseUser):
 
 class Movie(models.Model):
     name = models.CharField(max_length=255)
-    thumbnail = models.FileField()
     description = models.CharField(max_length=255)
-    video = models.FileField()
-    views = models.IntegerField(default=0)
+    thumbnail = models.ImageField(upload_to='thumbnails/')
+    video = models.FileField(upload_to='videos/')
+    views = models.PositiveBigIntegerField(default=0)
 
 class WatchList(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = ('user', 'movie')
 
 class WatchHistory(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
