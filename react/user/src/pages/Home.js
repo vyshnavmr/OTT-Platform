@@ -1,29 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 function Home() {
 
-  const watchLaterMovies = [
-    "Interstellar",
-    "Inception",
-    "Avatar"
-  ];
+  const navigate = useNavigate();
 
-  const historyMovies = [
-    "Batman",
-    "Joker",
-    "Oppenheimer"
-  ];
-
-  const movies = [
-    "Movie 1", "Movie 2", "Movie 3", "Movie 4", "Movie 5",
-    "Movie 6", "Movie 7", "Movie 8", "Movie 9", "Movie 10",
-    "Movie 11", "Movie 12", "Movie 13", "Movie 14", "Movie 15",
-    "Movie 16", "Movie 17", "Movie 18", "Movie 19", "Movie 20"
-  ];
-
+  const [movies, setMovies] = useState([]);
+  const [watchList, setWatchList] = useState([]);
+  const [history, setHistory] = useState([]);
   const [visibleMovies, setVisibleMovies] = useState(6);
+
+  useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    };
+
+    // Watchlist
+    axios.get(
+      "http://127.0.0.1:8000/userapi/watchlist/",
+      config
+    )
+    .then(response => {
+      setWatchList(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    // History
+    axios.get(
+      "http://127.0.0.1:8000/userapi/watchhistory/",
+      config
+    )
+    .then(response => {
+      setHistory(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    // Movies
+    axios.get(
+      "http://127.0.0.1:8000/userapi/listmovie/",
+      config
+    )
+    .then(response => {
+      setMovies(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+  }, [navigate]);
 
   const pageStyle = {
     backgroundColor: "#0a0a15",
@@ -37,40 +78,12 @@ function Home() {
 
   const sectionTitle = {
     marginTop: "30px",
-    marginBottom: "15px"
+    marginBottom: "20px"
   };
 
   const rowStyle = {
-    display: "flex",
-    gap: "20px",
-    flexWrap: "wrap"
-  };
-
-  const smallCard = {
-    width: "220px",
-    backgroundColor: "#161625",
-    borderRadius: "10px",
-    overflow: "hidden",
-    cursor: "pointer"
-  };
-
-  const thumbStyle = {
-    width: "100%",
-    height: "150px",
-    backgroundColor: "#2b2b45"
-  };
-
-  const seeMoreStyle = {
-    marginTop: "15px",
-    marginBottom: "20px",
-    color: "cyan",
-    cursor: "pointer",
-    fontWeight: "bold"
-  };
-
-  const gridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
     gap: "20px"
   };
 
@@ -81,15 +94,15 @@ function Home() {
     cursor: "pointer"
   };
 
-  const movieImage = {
-    width: "100%",
-    height: "250px",
-    backgroundColor: "#2b2b45"
+  const movieTitle = {
+    padding: "15px"
   };
 
-  const movieTitle = {
-    padding: "15px",
-    textAlign: "center"
+  const seeMoreStyle = {
+    color: "cyan",
+    cursor: "pointer",
+    marginTop: "15px",
+    fontWeight: "bold"
   };
 
   const buttonContainer = {
@@ -114,23 +127,40 @@ function Home() {
 
       <div style={containerStyle}>
 
-        {/* WATCH LATER */}
+        {/* WATCH LIST */}
 
         <h2 style={sectionTitle}>Watch Later</h2>
 
         <div style={rowStyle}>
-          {watchLaterMovies.map((movie, index) => (
-            <div key={index} style={smallCard}>
-              <div style={thumbStyle}></div>
 
-              <div style={{ padding: "10px" }}>
-                <h4>{movie}</h4>
+          {watchList.slice(0, 3).map((item) => (
+
+            <div key={item.id} style={movieCard}>
+
+              <img
+                src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
+                alt={item.movie.name}
+                style={{
+                  width: "100%",
+                  height: "250px",
+                  objectFit: "cover"
+                }}
+              />
+
+              <div style={movieTitle}>
+                <h4>{item.movie.name}</h4>
               </div>
+
             </div>
+
           ))}
+
         </div>
 
-        <div style={seeMoreStyle}>
+        <div
+          style={seeMoreStyle}
+          onClick={() => navigate("/watchlater")}
+        >
           See More →
         </div>
 
@@ -139,46 +169,99 @@ function Home() {
         <h2 style={sectionTitle}>History</h2>
 
         <div style={rowStyle}>
-          {historyMovies.map((movie, index) => (
-            <div key={index} style={smallCard}>
-              <div style={thumbStyle}></div>
 
-              <div style={{ padding: "10px" }}>
-                <h4>{movie}</h4>
+          {history.slice(0, 3).map((item) => (
+
+            <div key={item.id} style={movieCard}>
+
+              <img
+                src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
+                alt={item.movie.name}
+                style={{
+                  width: "100%",
+                  height: "250px",
+                  objectFit: "cover"
+                }}
+              />
+
+              <div style={movieTitle}>
+                <h4>{item.movie.name}</h4>
               </div>
+
             </div>
+
           ))}
+
         </div>
 
-        <div style={seeMoreStyle}>
+        <div
+          style={seeMoreStyle}
+          onClick={() => navigate("/history")}
+        >
           See More →
         </div>
 
-        {/* ALL MOVIES */}
+        {/* AVAILABLE MOVIES */}
 
         <h2 style={sectionTitle}>Available Movies</h2>
 
-        <div style={gridStyle}>
-          {movies.slice(0, visibleMovies).map((movie, index) => (
-            <div key={index} style={movieCard}>
-              <div style={movieImage}></div>
+        <div style={rowStyle}>
+
+          {movies.slice(0, visibleMovies).map((movie) => (
+
+            <div key={movie.id} style={movieCard}>
+
+              <img
+                src={`http://127.0.0.1:8000${movie.thumbnail}`}
+                alt={movie.name}
+                style={{
+                  width: "100%",
+                  height: "250px",
+                  objectFit: "cover"
+                }}
+              />
 
               <div style={movieTitle}>
-                <h4>{movie}</h4>
+                <h4>{movie.name}</h4>
+
+                <p
+                  style={{
+                    color: "#ccc",
+                    fontSize: "14px"
+                  }}
+                >
+                  {movie.description}
+                </p>
+
+                <p>
+                  Views: {movie.views}
+                </p>
+
               </div>
+
             </div>
+
           ))}
+
         </div>
 
         {visibleMovies < movies.length && (
+
           <div style={buttonContainer}>
+
             <button
               style={showMoreButton}
-              onClick={() => setVisibleMovies(visibleMovies + 6)}
+              onClick={() =>
+                setVisibleMovies(
+                  visibleMovies + 6
+                )
+              }
             >
               Show More ▼
             </button>
+
           </div>
+
         )}
 
       </div>
