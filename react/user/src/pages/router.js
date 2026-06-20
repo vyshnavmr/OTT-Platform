@@ -7,7 +7,7 @@ import Movies from "./Movies";
 import MovieDetails from "./MovieDetails";
 import WatchLater from "./WatchLater";
 import History from "./History";
-import ChangePassword from "./changepassword";
+import ChangePassword from "./ChangePassword";
 
 const router = createBrowserRouter([
   {

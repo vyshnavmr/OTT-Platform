@@ -48,7 +48,7 @@ def login(request):
         return Response({'error': 'Please provide both email and password'},
                         status=HTTP_400_BAD_REQUEST)
     
-    user = authenticate(email=email, password=password)
+    user = authenticate(username=email, password=password)
 
     if not user:
         return Response({'error': 'Invalid Credentials'},
