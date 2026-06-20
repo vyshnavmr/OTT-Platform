@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 function Home() {
 
   const navigate = useNavigate();
-
   const [movies, setMovies] = useState([]);
   const [watchList, setWatchList] = useState([]);
   const [history, setHistory] = useState([]);
@@ -18,7 +17,7 @@ function Home() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      navigate("/");
+      navigate("/login");
       return;
     }
 
@@ -29,10 +28,7 @@ function Home() {
     };
 
     // Watchlist
-    axios.get(
-      "http://127.0.0.1:8000/userapi/watchlist/",
-      config
-    )
+    axios.get("http://127.0.0.1:8000/userapi/watchlist/",config)
     .then(response => {
       setWatchList(response.data);
     })
@@ -42,9 +38,7 @@ function Home() {
 
     // History
     axios.get(
-      "http://127.0.0.1:8000/userapi/watchhistory/",
-      config
-    )
+      "http://127.0.0.1:8000/userapi/watchhistory/",config)
     .then(response => {
       setHistory(response.data);
     })
@@ -52,11 +46,8 @@ function Home() {
       console.log(error);
     });
 
-    // Movies
-    axios.get(
-      "http://127.0.0.1:8000/userapi/listmovie/",
-      config
-    )
+    // All Movies
+    axios.get("http://127.0.0.1:8000/userapi/listmovie/",config)
     .then(response => {
       setMovies(response.data);
     })
@@ -122,21 +113,14 @@ function Home() {
 
   return (
     <div style={pageStyle}>
-
       <Header />
 
       <div style={containerStyle}>
-
         {/* WATCH LIST */}
-
         <h2 style={sectionTitle}>Watch Later</h2>
-
         <div style={rowStyle}>
-
           {watchList.slice(0, 3).map((item) => (
-
             <div key={item.id} style={movieCard}>
-
               <img
                 src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
                 alt={item.movie.name}
@@ -144,36 +128,26 @@ function Home() {
                   width: "100%",
                   height: "250px",
                   objectFit: "cover"
-                }}
-              />
-
+                }}/>
               <div style={movieTitle}>
                 <h4>{item.movie.name}</h4>
               </div>
-
             </div>
-
           ))}
-
         </div>
 
         <div
           style={seeMoreStyle}
-          onClick={() => navigate("/watchlater")}
-        >
+          onClick={() => navigate("/watchlater")}>
           See More →
         </div>
 
         {/* HISTORY */}
-
         <h2 style={sectionTitle}>History</h2>
 
         <div style={rowStyle}>
-
           {history.slice(0, 3).map((item) => (
-
             <div key={item.id} style={movieCard}>
-
               <img
                 src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
                 alt={item.movie.name}
@@ -181,36 +155,28 @@ function Home() {
                   width: "100%",
                   height: "250px",
                   objectFit: "cover"
-                }}
-              />
+                }}/>
 
               <div style={movieTitle}>
                 <h4>{item.movie.name}</h4>
               </div>
-
             </div>
-
           ))}
-
         </div>
 
         <div
           style={seeMoreStyle}
-          onClick={() => navigate("/history")}
-        >
+          onClick={() => navigate("/history")}>
           See More →
         </div>
 
         {/* AVAILABLE MOVIES */}
-
         <h2 style={sectionTitle}>Available Movies</h2>
 
         <div style={rowStyle}>
-
           {movies.slice(0, visibleMovies).map((movie) => (
 
             <div key={movie.id} style={movieCard}>
-
               <img
                 src={`http://127.0.0.1:8000${movie.thumbnail}`}
                 alt={movie.name}
@@ -218,56 +184,41 @@ function Home() {
                   width: "100%",
                   height: "250px",
                   objectFit: "cover"
-                }}
-              />
+                }}/>
 
               <div style={movieTitle}>
                 <h4>{movie.name}</h4>
 
-                <p
-                  style={{
+                <p style={{
                     color: "#ccc",
                     fontSize: "14px"
-                  }}
-                >
+                  }}>
                   {movie.description}
                 </p>
-
                 <p>
                   Views: {movie.views}
                 </p>
-
               </div>
-
             </div>
-
           ))}
-
         </div>
 
         {visibleMovies < movies.length && (
 
           <div style={buttonContainer}>
-
             <button
               style={showMoreButton}
               onClick={() =>
                 setVisibleMovies(
-                  visibleMovies + 6
-                )
-              }
-            >
+                  visibleMovies + 6)}>
+
               Show More ▼
             </button>
-
           </div>
-
         )}
-
       </div>
 
       <Footer />
-
     </div>
   );
 }
