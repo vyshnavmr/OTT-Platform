@@ -22,38 +22,24 @@ function Home() {
     }
 
     const config = {
-      headers: {
-        Authorization: `Token ${token}`
-      }
+      headers: {Authorization: `Token ${token}`}
     };
 
     // Watchlist
     axios.get("http://127.0.0.1:8000/userapi/watchlist/",config)
-    .then(response => {
-      setWatchList(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    .then(response => {setWatchList(response.data);})
+    .catch(error => {console.log(error);});
 
     // History
     axios.get(
       "http://127.0.0.1:8000/userapi/watchhistory/",config)
-    .then(response => {
-      setHistory(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    .then(response => {setHistory(response.data);})
+    .catch(error => {console.log(error);});
 
     // All Movies
     axios.get("http://127.0.0.1:8000/userapi/listmovie/",config)
-    .then(response => {
-      setMovies(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    .then(response => {setMovies(response.data);})
+    .catch(error => {console.log(error);});
 
   }, [navigate]);
 
@@ -68,8 +54,8 @@ function Home() {
   };
 
   const sectionTitle = {
-    marginTop: "30px",
-    marginBottom: "20px"
+    marginTop: "20px",
+    marginBottom: "35px"
   };
 
   const rowStyle = {
@@ -108,7 +94,7 @@ function Home() {
     border: "none",
     borderRadius: "5px",
     cursor: "pointer",
-    fontWeight: "bold"
+    fontWeight: "bold",
   };
 
   return (
@@ -116,24 +102,24 @@ function Home() {
       <Header />
 
       <div style={containerStyle}>
+
         {/* WATCH LIST */}
         <h2 style={sectionTitle}>Watch Later</h2>
         <div style={rowStyle}>
           {watchList.slice(0, 3).map((item) => (
-            <div key={item.id} style={movieCard}>
+            <div key={item.id} style={movieCard}
+            onClick={() => navigate(`/moviedetails/${item.movie.id}`)}>
               <img
                 src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
                 alt={item.movie.name}
                 style={{
                   width: "100%",
                   height: "250px",
-                  objectFit: "cover"
-                }}/>
+                  objectFit: "cover"}}/>
               <div style={movieTitle}>
                 <h4>{item.movie.name}</h4>
               </div>
-            </div>
-          ))}
+            </div>))}
         </div>
 
         <div
@@ -147,7 +133,8 @@ function Home() {
 
         <div style={rowStyle}>
           {history.slice(0, 3).map((item) => (
-            <div key={item.id} style={movieCard}>
+            <div key={item.id} style={movieCard}
+            onClick={() => navigate(`/moviedetails/${item.movie.id}`)}>
               <img
                 src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
                 alt={item.movie.name}
@@ -176,7 +163,9 @@ function Home() {
         <div style={rowStyle}>
           {movies.slice(0, visibleMovies).map((movie) => (
 
-            <div key={movie.id} style={movieCard}>
+            <div key={movie.id} style={movieCard}
+            onClick={() => navigate(`/moviedetails/${movie.id}`)}>
+
               <img
                 src={`http://127.0.0.1:8000${movie.thumbnail}`}
                 alt={movie.name}

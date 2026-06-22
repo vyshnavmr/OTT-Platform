@@ -4,8 +4,8 @@ import { useState } from "react";
 
 function Header() {
   const navigate = useNavigate();
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [showResults, setShowResults] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
   const handleLogout = () => {
@@ -14,20 +14,40 @@ function Header() {
     );
 
     if (confirmLogout) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       navigate("/login");
     }
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  // const handleSearchChange = async (e) => {
+  //   const value = e.target.value;
+  //   setSearchTerm(value);
 
-    if (searchTerm.trim()) {
-      console.log("Searching for:", searchTerm);
+  //   if (!value.trim()) {
+  //     setSearchResults([]);
+  //     setShowResults(false);
+  //     return;
+  //   }
 
-      // Example:
-      // navigate(`/search/${searchTerm}`);
-    }
-  };
+  //   try {
+  //     const token = localStorage.getItem("token");
+
+  //     const response = await axios.get(
+  //       `http://127.0.0.1:8000/userapi/searchmovie/?q=${value}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Token ${token}`,
+  //         },
+  //       }
+  //     );
+
+  //     setSearchResults(response.data);
+  //     setShowResults(true);
+  //   } catch (error) {
+  //     console.error("Search Error:", error);
+  //   }
+  // };
 
   return (
     <header className="header">
@@ -35,35 +55,61 @@ function Header() {
 
       <nav className="nav-links">
         <Link to="/home">Home</Link>
-        <Link to="/watchlater">Watchlist</Link>
+        <Link to="/watchlater">WatchLater</Link>
         <Link to="/movies">Movies</Link>
-        {/* <Link to="/">Others</Link> */}
+        <Link to="/history">History</Link>
       </nav>
 
       <div className="header-right">
-        <form onSubmit={handleSearch} className="search-form">
+
+        {/* Search */}
+        <div
+          style={{
+            position: "relative",
+          }}>
+
+          {/* SEARCH BAR */}
+          {/* <input
+            type="text"
+            placeholder="Search movies..."
+            className="search-input"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            onFocus={() => {
+              if (searchResults.length > 0) {
+                setShowResults(true);
+              }
+            }}/> */}
           <input
             type="text"
             placeholder="Search movies..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </form>
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && searchTerm.trim()) {
+                navigate(`/search/${searchTerm}`);
+              }
+            }}/>  
+        </div>
 
+        {/* Account Menu */}
         <div className="profile-menu">
           <button
             className="account-btn"
-            onClick={() => setShowMenu(!showMenu)}
+        
+            onClick={() =>{ setShowMenu(!showMenu);
+              console.log("clicked");
+            }}
           >
-            Account 🡓
+            Account ▼
           </button>
 
           {showMenu && (
-            <div className="dropdown-menu">
+            <div className="user-dropdown-menu">
               <button
                 className="dropdown-item"
-                onClick={() => navigate("/change-password")}
+                onClick={() => navigate("/changepassword")}
               >
                 Change Password
               </button>
@@ -77,6 +123,7 @@ function Header() {
             </div>
           )}
         </div>
+
       </div>
     </header>
   );

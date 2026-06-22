@@ -8,6 +8,7 @@ import MovieDetails from "./MovieDetails";
 import WatchLater from "./WatchLater";
 import History from "./History";
 import ChangePassword from "./ChangePassword";
+import SearchMovies from "./SearchMovies";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,9 @@ const router = createBrowserRouter([
   },
   {  path: "/history",
     element: <History />,
+  },
+  {  path: "/search/:query",
+    element: <SearchMovies />,
   },
   {  path: "/changepassword",
     element: <ChangePassword />,

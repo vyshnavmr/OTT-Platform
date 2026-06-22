@@ -1,34 +1,25 @@
 .header {
     width: 100%;
     height: 80px;
-
     background: rgba(10, 10, 20, 0.95);
     backdrop-filter: blur(10px);
-
     display: flex;
     align-items: center;
-
     padding: 0 40px;
     box-sizing: border-box;
-
     border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-
     position: sticky;
     top: 0;
-
     z-index: 1000;
 }
 
 .logo {
     font-size: 36px;
     font-weight: bold;
-
     color: cyan;
-
     text-shadow:
         0 0 10px cyan,
         0 0 20px cyan;
-
     cursor: pointer;
 }
 
@@ -43,18 +34,14 @@
 
 .nav-links a {
     text-decoration: none;
-
     color: white;
-
     font-size: 18px;
     font-weight: 500;
-
     transition: 0.3s;
 }
 
 .nav-links a:hover {
     color: cyan;
-
     text-shadow:
         0 0 10px cyan,
         0 0 20px cyan;
@@ -62,15 +49,12 @@
 
 .header-right {
     margin-left: auto;
-
     display: flex;
     align-items: center;
-
     gap: 20px;
 }
 
 /* Search Bar */
-
 .search-form {
     display: flex;
     align-items: center;
@@ -79,23 +63,16 @@
 .search-input {
     width: 250px;
     height: 42px;
-
     padding: 0 15px 0 40px;
-
     border: none;
     border-radius: 25px;
-
     outline: none;
-
     background:
         white
         url("https://cdn-icons-png.flaticon.com/512/622/622669.png")
         no-repeat 12px center;
-
     background-size: 16px;
-
     font-size: 15px;
-
     transition: 0.3s;
 }
 
@@ -106,86 +83,169 @@
 }
 
 /* Account Button */
-
 .account-btn {
     padding: 10px 22px;
-
     background: transparent;
-
     border: 1px solid cyan;
-
     color: cyan;
-
     border-radius: 10px;
-
     cursor: pointer;
-
     transition: 0.3s;
-
     font-size: 15px;
 }
 
 .account-btn:hover {
     background: cyan;
     color: black;
-
     box-shadow:
         0 0 10px cyan,
         0 0 20px cyan;
 }
 
 /* Dropdown */
-
 .profile-menu {
     position: relative;
 }
 
-.dropdown-menu {
+.user-dropdown-menu {
     position: absolute;
-
     top: 55px;
     right: 0;
-
     width: 190px;
-
     background: #141428;
-
     border: 1px solid rgba(0, 255, 255, 0.2);
-
     border-radius: 12px;
-
     overflow: hidden;
-
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-
     z-index: 1001;
 }
 
 .dropdown-item {
     width: 100%;
-
     padding: 14px 18px;
-
     background: transparent;
     border: none;
-
     color: white;
-
     text-align: left;
-
     cursor: pointer;
-
     font-size: 15px;
-
     transition: 0.3s;
 }
 
 .dropdown-item:hover {
     background: rgba(0, 255, 255, 0.15);
-
     color: cyan;
 }
 
 .logout-item {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* Tablets */
+@media (max-width: 1024px) {
+
+    .header {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        margin-left: 40px;
+        gap: 20px;
+    }
+
+    .search-input {
+        width: 180px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+    .header {
+        height: auto;
+        padding: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 28px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links {
+        width: 100%;
+        margin-left: 0;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .nav-links a {
+        font-size: 16px;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .search-input {
+        width: 220px;
+    }
+
+    .account-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .user-dropdown-menu {
+        top: 50px;
+        right: 50%;
+        transform: translateX(50%);
+        width: 180px;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    .header {
+        padding: 12px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+
+    .search-input {
+        width: 180px;
+        height: 38px;
+        font-size: 14px;
+    }
+
+    .account-btn {
+        width: 120px;
+        font-size: 13px;
+    }
+
+    .user-dropdown-menu {
+        width: 160px;
+    }
+
+    .dropdown-item {
+        padding: 12px;
+        font-size: 14px;
+    }
 }

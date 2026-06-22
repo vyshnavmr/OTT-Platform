@@ -1,30 +1,44 @@
 import Header from "../components/Header";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Movies() {
-  const movies = [
-    "Interstellar",
-    "Inception",
-    "Avatar",
-    "Oppenheimer",
-    "Joker",
-    "Batman",
-    "Titanic",
-    "The Dark Knight",
-    "Avengers: Endgame",
-    "Spider-Man: No Way Home"
-  ];
+  const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
+  const fetchMovies = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get(
+        "http://127.0.0.1:8000/userapi/listmovie/",
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      setMovies(response.data);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
+  };
 
   const styles = {
     container: {
       minHeight: "100vh",
       backgroundColor: "#0a0a14",
-      padding: "40px",
+      padding: "30px",
       color: "white",
     },
-    heading: {
-      color: "cyan",
-      textShadow: "0 0 10px cyan",
-      marginBottom: "30px",
+    heading:{
+      marginBottom: "40px"
     },
     movieGrid: {
       display: "grid",
@@ -63,10 +77,27 @@ function Movies() {
         <h1 style={styles.heading}>All Movies</h1>
 
         <div style={styles.movieGrid}>
-          {movies.map((movie, index) => (
-            <div key={index} style={styles.movieCard}>
-              <div style={styles.moviePoster}></div>
-              <div style={styles.movieTitle}>{movie}</div>
+          {movies.map((movie) => (
+            <div
+              key={movie.id}
+              style={styles.movieCard}
+              onClick={() =>
+                navigate(`/moviedetails/${movie.id}`)
+              }
+            >
+              {movie.image ? (
+                <img
+                  src={movie.image}
+                  alt={movie.name}
+                  style={styles.moviePoster}
+                />
+              ) : (
+                <div style={styles.moviePoster}></div>
+              )}
+
+              <div style={styles.movieTitle}>
+                {movie.name}
+              </div>
             </div>
           ))}
         </div>
