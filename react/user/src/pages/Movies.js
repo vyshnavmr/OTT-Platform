@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -42,7 +43,7 @@ function Movies() {
     },
     movieGrid: {
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+      gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
       gap: "25px",
     },
     movieCard: {
@@ -50,7 +51,7 @@ function Movies() {
       border: "1px solid rgba(0,255,255,0.2)",
       borderRadius: "12px",
       padding: "20px",
-      textAlign: "center",
+      textAlign: "left",
       cursor: "pointer",
       transition: "0.3s",
     },
@@ -83,25 +84,35 @@ function Movies() {
               style={styles.movieCard}
               onClick={() =>
                 navigate(`/moviedetails/${movie.id}`)
-              }
-            >
+              }>
               {movie.image ? (
                 <img
                   src={movie.image}
                   alt={movie.name}
-                  style={styles.moviePoster}
-                />
-              ) : (
-                <div style={styles.moviePoster}></div>
-              )}
+                  style={styles.moviePoster}/>) 
+                : (<div style={styles.moviePoster}></div>)
+              }
 
               <div style={styles.movieTitle}>
                 {movie.name}
               </div>
+
+              <p
+                style={{
+                  color: "#aaa",
+                  fontSize: "14px",
+                  lineHeight: "1.5",
+                  textAlign: "left",
+                  margin: 0,
+                }}
+              >
+                {movie.description}
+              </p>
             </div>
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

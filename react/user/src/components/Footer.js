@@ -10,9 +10,9 @@ function Footer() {
       </p>
 
       <div className="footer-links">
-        <a href="/">Home</a>
-        <a href="/">Movies</a>
-        <a href="/">Profile</a>
+        <a href="/home">Home</a>
+        <a href="/movies">Movies</a>
+        <a href="/history">History</a>
         {/* <a href="/">Contact</a> */}
       </div>
 

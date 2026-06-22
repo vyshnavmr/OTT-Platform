@@ -1,11 +1,14 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function WatchLater() {
   const [watchlist, setWatchlist] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchWatchlist();
@@ -68,48 +71,125 @@ function WatchLater() {
           padding: "30px",
         }}
       >
-        <h1 style={{ marginBottom: "40px" }}>
+        <h1
+          style={{
+            marginBottom: "40px",
+          }}
+        >
           Watch Later
         </h1>
 
         {loading ? (
           <h2>Loading...</h2>
         ) : watchlist.length === 0 ? (
-          <h2>No movies in watch Later List</h2>
+          <h2>No movies in Watch Later List</h2>
         ) : (
-          watchlist.map((item) => (
-            <div
-              key={item.id}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "#161625",
-                marginBottom: "15px",
-                padding: "15px",
-                borderRadius: "10px",
-              }}
-            >
-              <div>
-                <h3>{item.movie.name}</h3>
-                <p>{item.movie.description}</p>
-              </div>
-
-              <button
-                onClick={() => deleteMovie(item.movie.id)}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fill, minmax(260px, 1fr))",
+              gap: "25px",
+            }}
+          >
+            {watchlist.map((item) => (
+              <div
+                key={item.id}
+                onClick={() =>
+                  navigate(`/moviedetails/${item.movie.id}`)
+                }
                 style={{
-                  backgroundColor: "#ff4444",
-                  color: "white",
-                  border: "none",
-                  padding: "10px 15px",
-                  borderRadius: "8px",
+                  position: "relative",
+                  backgroundColor: "#141428",
+                  border: "1px solid rgba(0,255,255,0.2)",
+                  borderRadius: "12px",
+                  padding: "20px",
                   cursor: "pointer",
+                  transition: "0.3s",
                 }}
               >
-                Delete
-              </button>
-            </div>
-          ))
+                {/* Delete Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteMovie(item.movie.id);
+                  }}
+                  style={{
+                    position: "absolute",
+                    top: "12px",
+                    right: "12px",
+                    width: "34px",
+                    height: "34px",
+                    borderRadius: "50%",
+                    border: "none",
+                    background: "rgba(255, 68, 68, 0.15)",
+                    color: "#ff5c5c",
+                    fontSize: "22px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = "#ff4444";
+                    e.target.style.color = "white";
+                    e.target.style.transform = "scale(1.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = "rgba(255, 68, 68, 0.15)";
+                    e.target.style.color = "#ff5c5c";
+                    e.target.style.transform = "scale(1)";
+                  }}
+                >
+                  ×
+                </button>
+
+                {/* Movie Poster */}
+                <div
+                  style={{
+                    width: "100%",
+                    height: "250px",
+                    backgroundColor: "#2b2b45",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    marginBottom: "15px",
+                  }}
+                >
+                  {item.movie.image && (
+                    <img
+                      src={item.movie.image}
+                      alt={item.movie.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  )}
+                </div>
+
+                <h3
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  {item.movie.name}
+                </h3>
+
+                <p
+                  style={{
+                    color: "#aaa",
+                    fontSize: "14px",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  {item.movie.description}
+                </p>
+              </div>
+            ))}
+          </div>
         )}
       </div>
 
