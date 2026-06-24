@@ -172,8 +172,7 @@ function Home() {
                 style={{
                   width: "100%",
                   height: "250px",
-                  objectFit: "cover"
-                }}/>
+                  objectFit: "cover"}}/>
 
               <div style={movieTitle}>
                 <h4>{movie.name}</h4>
@@ -188,8 +187,7 @@ function Home() {
                   Views: {movie.views}
                 </p>
               </div>
-            </div>
-          ))}
+            </div>))}
         </div>
 
         {visibleMovies < movies.length && (

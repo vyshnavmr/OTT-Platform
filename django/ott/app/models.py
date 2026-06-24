@@ -32,7 +32,7 @@ class User(AbstractBaseUser):
 class Movie(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    thumbnail = models.ImageField(upload_to='thumbnails/')
+    thumbnail = models.FileField(upload_to='thumbnails/')
     video = models.FileField(upload_to='videos/')
     views = models.PositiveBigIntegerField(default=0)
 

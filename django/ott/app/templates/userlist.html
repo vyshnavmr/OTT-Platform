@@ -90,7 +90,10 @@
                                     <th>ID</th>
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Date Joined</th>
+                                    <th>Last Login</th>
+                                    <th>Is Active</th>
+                                    <th>Actions</th>
+                                    <th>History</th>
                                 </tr>
 
                             </thead>
@@ -103,12 +106,46 @@
 
                                         <td>{{ user.id }}</td>
 
-                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.name }}</td>
 
                                         <td>{{ user.email }}</td>
 
-                                        <td>{{ user.date_joined }}</td>
+                                        <td>{{ user.last_login }}</td>
+                                        
+                                        <td>
+                                            {% if user.is_active %}
+                                            Yes
+                                            {% else %}
+                                            No
+                                            {% endif %}
+                                        </td>
+                                        
+                                        <td>
+                                            {% if user.is_active %}
+                                            
+                                                <a href="{% url 'blockuser' user.id %}"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Block this user?')">
+                                                    Block
+                                                </a>
+                                                
+                                                {% else %}
+                                                
+                                                <a href="{% url 'unblockuser' user.id %}"
+                                                class="btn btn-primary btn-sm"
+                                                onclick="return confirm('Unblock this user?')">
+                                                    Unblock
+                                                </a>
 
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'user_history' user.id %}"
+                                            class="btn btn-info btn-sm">
+                                            View History
+                                            </a>
+                                        </td>
+                                        
                                     </tr>
 
                                 {% endfor %}

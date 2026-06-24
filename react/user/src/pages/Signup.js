@@ -113,7 +113,9 @@ function Signup() {
         </button>
 
         </form>
-
+        <div style={{marginTop:"20px"}}>
+          <p>Already a User? <a href="/login">Click Here</a></p>
+        </div>
       </div>
 
     </div>

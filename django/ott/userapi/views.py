@@ -1,17 +1,18 @@
+from django.http import JsonResponse
+from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
+from django.shortcuts import get_object_or_404
+from django.db.models import F
 from rest_framework import status
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from app.models import User, Movie, WatchList, WatchHistory
-from django.http import JsonResponse
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.authtoken.models import Token
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate
+from app.models import User, Movie, WatchList, WatchHistory
 from .serializers import MovieSerializer, WatchListSerializer, WatchHistorySerializer
-from django.contrib.auth.hashers import check_password
-from django.shortcuts import get_object_or_404
-from django.db.models import F
 
 
 #! 65ef6f3eca0d8900933fafab8e21acc9694aa61e
@@ -53,6 +54,8 @@ def login(request):
     if not user:
         return Response({'error': 'Invalid Credentials'},
                         status=HTTP_404_NOT_FOUND)
+    user.last_login = timezone.now()
+    user.save(update_fields=['last_login'])
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},status=HTTP_200_OK)
 

@@ -111,7 +111,7 @@
                 {% endif %}
 
                 <!-- FORM -->
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'addmovie'%}">
 
                     {% csrf_token %}
 

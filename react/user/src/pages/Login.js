@@ -111,6 +111,9 @@ function Login() {
 
         </form>
 
+        <div style={{marginTop:"20px"}}>
+            <p>New User? <a href="/">Click Here</a></p>
+        </div>
       </div>
     </div>
   );
