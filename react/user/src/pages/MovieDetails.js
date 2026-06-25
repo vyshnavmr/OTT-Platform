@@ -1,22 +1,19 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 function MovieDetails() {
   const { id } = useParams();
-
   const [movie, setMovie] = useState(null);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchMovie();
-  }, [id]);
-
+  useEffect(() => {fetchMovie();}, [id]);
+  
   const fetchMovie = async () => {
     try {
       const token = localStorage.getItem("token");
-
       const response = await axios.get(
         `http://127.0.0.1:8000/userapi/movie/details/${id}/`,
         {
@@ -27,29 +24,46 @@ function MovieDetails() {
       );
 
       setMovie(response.data);
-    } catch (error) {
-      console.error("Error fetching movie:", error);
-    }
+    } catch (error) {console.error("Error fetching movie:", error);}
   };
 
   const addToWatchLater = async () => {
     try {
       const token = localStorage.getItem("token");
-
       const response = await axios.post(
         `http://127.0.0.1:8000/userapi/watchlist/add/${id}/`,
         {},
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
+        {headers: {Authorization: `Token ${token}`,},}
       );
 
       alert(response.data.message);
     } catch (error) {
       console.error(error);
       alert("Failed to add movie");
+    }
+  };
+
+  const playMovie = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.post(`http://127.0.0.1:8000/userapi/movie/watch/${id}/`,{},
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+      console.log(movie.video);
+      console.log(movie);
+      navigate("/videoplayer", {
+        state: {
+          video: movie.video,
+        },
+      });
+
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -148,7 +162,8 @@ function MovieDetails() {
             </p>
 
             <div style={buttonContainer}>
-              <button style={playButton}>
+              <button style={playButton}
+                onClick={playMovie}>
                 Play Now
               </button>
 

@@ -76,7 +76,23 @@ function History() {
           history.map((item) => (
             <div key={item.id} style={listItemStyle}>
 
-              <div style={thumbnailStyle}></div>
+              <div style={thumbnailStyle}>
+                {item.movie.thumbnail && (
+                  <img
+                    src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
+                    alt={item.movie.name}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                    onError={(e) => {
+                      console.log("Thumbnail failed:", e.target.src);
+                    }}
+                  />
+                )}
+              </div>
 
               <div>
                 <h3>{item.movie.name}</h3>

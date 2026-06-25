@@ -5,6 +5,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Movies from "./Movies";
 import MovieDetails from "./MovieDetails";
+import VideoPlayer from "./VideoPlayer";
 import WatchLater from "./WatchLater";
 import History from "./History";
 import ChangePassword from "./ChangePassword";
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/moviedetails/:id",
     element: <MovieDetails />,
+  },
+  {
+    path: "/videoplayer",
+    element: <VideoPlayer />,
   },
   {  path: "/watchlater",
     element: <WatchLater />,

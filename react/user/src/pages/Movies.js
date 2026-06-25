@@ -85,11 +85,13 @@ function Movies() {
               onClick={() =>
                 navigate(`/moviedetails/${movie.id}`)
               }>
-              {movie.image ? (
+              {movie.thumbnail ? (
                 <img
-                  src={movie.image}
+                  src={`http://127.0.0.1:8000${movie.thumbnail}`}
                   alt={movie.name}
-                  style={styles.moviePoster}/>) 
+                  style={styles.moviePoster}
+                  onError={(e) => console.log("Image failed:", e.target.src)}
+                />) 
                 : (<div style={styles.moviePoster}></div>)
               }
 

@@ -27,6 +27,8 @@ function WatchLater() {
         }
       );
 
+      console.log(response.data); // Debug
+
       setWatchlist(response.data);
     } catch (error) {
       console.error("Error fetching watchlist:", error);
@@ -66,18 +68,8 @@ function WatchLater() {
     >
       <Header />
 
-      <div
-        style={{
-          padding: "30px",
-        }}
-      >
-        <h1
-          style={{
-            marginBottom: "40px",
-          }}
-        >
-          Watch Later
-        </h1>
+      <div style={{ padding: "30px" }}>
+        <h1 style={{ marginBottom: "40px" }}>Watch Later</h1>
 
         {loading ? (
           <h2>Loading...</h2>
@@ -87,17 +79,14 @@ function WatchLater() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fill, minmax(260px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
               gap: "25px",
             }}
           >
             {watchlist.map((item) => (
               <div
                 key={item.id}
-                onClick={() =>
-                  navigate(`/moviedetails/${item.movie.id}`)
-                }
+                onClick={() => navigate(`/moviedetails/${item.movie.id}`)}
                 style={{
                   position: "relative",
                   backgroundColor: "#141428",
@@ -130,17 +119,7 @@ function WatchLater() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = "#ff4444";
-                    e.target.style.color = "white";
-                    e.target.style.transform = "scale(1.1)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = "rgba(255, 68, 68, 0.15)";
-                    e.target.style.color = "#ff5c5c";
-                    e.target.style.transform = "scale(1)";
+                    zIndex: 2,
                   }}
                 >
                   ×
@@ -157,9 +136,9 @@ function WatchLater() {
                     marginBottom: "15px",
                   }}
                 >
-                  {item.movie.image && (
+                  {item.movie.thumbnail ? (
                     <img
-                      src={item.movie.image}
+                      src={`http://127.0.0.1:8000${item.movie.thumbnail}`}
                       alt={item.movie.name}
                       style={{
                         width: "100%",
@@ -167,16 +146,18 @@ function WatchLater() {
                         objectFit: "cover",
                       }}
                     />
+                  ) : (
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "#2b2b45",
+                      }}
+                    />
                   )}
                 </div>
 
-                <h3
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  {item.movie.name}
-                </h3>
+                <h3>{item.movie.name}</h3>
 
                 <p
                   style={{
