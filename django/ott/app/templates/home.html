@@ -64,7 +64,7 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger px-4">
 
         <a class="navbar-brand fw-bold" href="#">
             OTT Admin Panel
@@ -94,7 +94,7 @@
                     <li><hr class="dropdown-divider"></li>
 
                     <li>
-                        <a class="dropdown-item text-danger" href="#">
+                        <a class="dropdown-item text-danger" href="{%url 'logout'%}">
                             Logout
                         </a>
                     </li>
@@ -110,9 +110,9 @@
     <!-- DASHBOARD -->
     <div class="container dashboard-section">
 
-        <h2 class="text-center dashboard-title mb-5">
+        <h1 class="text-center dashboard-title mb-5 text-danger">
             OTT Admin Dashboard
-        </h2>
+        </h1>
 
         <div class="row g-4">
 
@@ -121,7 +121,7 @@
 
                 <div class="card card-box p-4 text-center">
 
-                    <div class="card-icon text-primary">
+                    <div class="card-icon text-danger">
                         <i class="bi bi-people-fill"></i>
                     </div>
 
@@ -129,7 +129,7 @@
 
                     <p>View all platform users</p>
 
-                    <a href="{%url 'userlist'%}" class="btn btn-primary btn-dashboard">
+                    <a href="{%url 'userlist'%}" class="btn btn-danger btn-dashboard">
                         User List
                     </a>
 
@@ -142,7 +142,7 @@
 
                 <div class="card card-box p-4 text-center">
 
-                    <div class="card-icon text-success">
+                    <div class="card-icon text-danger">
                         <i class="bi bi-film"></i>
                     </div>
 
@@ -150,7 +150,7 @@
 
                     <p>View all uploaded movies</p>
 
-                    <a href="{%url 'movielist'%}" class="btn btn-success btn-dashboard">
+                    <a href="{%url 'movielist'%}" class="btn btn-danger btn-dashboard">
                         Movie List
                     </a>
 
@@ -163,7 +163,7 @@
 
                 <div class="card card-box p-4 text-center">
 
-                    <div class="card-icon text-warning">
+                    <div class="card-icon text-danger">
                         <i class="bi bi-plus-circle-fill"></i>
                     </div>
 
@@ -171,7 +171,7 @@
 
                     <p>Upload new movies</p>
 
-                    <a href="{% url 'addmovie'%}" class="btn btn-warning btn-dashboard">
+                    <a href="{% url 'addmovie'%}" class="btn btn-danger btn-dashboard">
                         Add Movie
                     </a>
 

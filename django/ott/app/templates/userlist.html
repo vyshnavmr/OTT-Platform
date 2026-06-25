@@ -36,9 +36,23 @@
             box-shadow:0 5px 20px rgba(0,0,0,0.1);
         }
 
-        .table thead{
-            background:#0d6efd;
-            color:white;
+        .table-card .card-body{
+            padding:0;
+        }
+
+        .table{
+            margin-bottom:0;
+        }
+
+        .table thead th{
+            background:#0d6efd !important;
+            color:white !important;
+            border:none;
+            padding:16px;
+        }
+
+        .table tbody td{
+            padding:16px;
         }
 
         .empty-box{
@@ -76,7 +90,7 @@
         <!-- TABLE CARD -->
         <div class="card table-card">
 
-            <div class="card-body">
+            <div class="card-body  p-0">
 
                 {% if users %}
 
